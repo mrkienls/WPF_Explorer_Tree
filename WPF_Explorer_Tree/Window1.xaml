@@ -1,0 +1,76 @@
+﻿<Window x:Class="WPF_Explorer_Tree.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WPF_Explorer_Tree" 
+    WindowState="Maximized"
+    Title="Window1" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+            <TextBox  x:Name="txtRootPath" Text="root" Width="100" Height="auto" ></TextBox>
+            <Button Content="Save" Click="cmdSavePath"></Button>
+        </StackPanel>
+        
+        <Grid  Grid.Column="0" Grid.Row="1">
+            <DockPanel>
+                <TreeView x:Name="foldersItem" SelectedItemChanged="foldersItem_SelectedItemChanged" Width="Auto" Background="#FFFFFFFF" BorderBrush="#FFFFFFFF" Foreground="#FFFFFFFF">
+                    <TreeView.Resources>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="HeaderTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Name="img"  Width="20" Height="20" Stretch="Fill" 
+                                       Source="{Binding 
+                                       RelativeSource={RelativeSource 
+                                       Mode=FindAncestor, 
+                                       AncestorType={x:Type TreeViewItem}}, 
+                                       Path=Header, 
+                                       Converter={x:Static local:HeaderToImageConverter.Instance}}"       
+                                       />
+                                            <TextBlock Text="{Binding}" Margin="5,0" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TreeView.Resources>
+                </TreeView>
+            </DockPanel>
+        </Grid>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" >
+         
+            <avalonEdit:TextEditor  xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"  Name="txtViewSQL"
+                                FontFamily="Consolas"   SyntaxHighlighting="C#" FontSize="10pt"  />
+
+            <StackPanel VerticalAlignment="Bottom"  Orientation="Horizontal">
+                <Button Content="Run SQL" VerticalAlignment="Bottom" Click="cmdRun_SQL"></Button>
+                <TextBox Name="txtSchema"  Text="DULIEU_LSN"></TextBox>
+                <Button Name="cmdSaveSql"  Content="SaveSql" Click="cmdSaveSQL"></Button>
+                <TextBox Name="txtLog" ></TextBox>
+            </StackPanel>
+        </StackPanel>
+ 
+        
+        <ListView x:Name="listFiles"  Grid.Column="0" Grid.Row="2" SelectionChanged="listFiles_SelectionChanged" MouseEnter="listFiles_MouseEnter" MouseLeftButtonDown="listFiles_MouseLeftButtonDown" MouseDoubleClick="listFiles_MouseDoubleClick"/>
+
+        <StackPanel  Grid.Column="1" Grid.Row="2" Orientation="Vertical" Width="auto">
+            <Button Content="Export" VerticalAlignment="Top" Click="cmdExport"></Button>
+            <DataGrid  Name="GridView"  >
+
+            </DataGrid>
+        </StackPanel>
+        
+    </Grid>
+   
+</Window>
+
+    
